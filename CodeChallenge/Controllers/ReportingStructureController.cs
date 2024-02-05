@@ -20,8 +20,8 @@ namespace CodeChallenge.Controllers
 			_employeeService = employeeService;
 		}
 
-		[HttpGet("{id}", Name = "getReportingStructureByEmployeeId")]
-		public IActionResult GetReportingStructureByEmployeeId(String id)
+		[HttpGet("{id}", Name = "getReportingStructure")]
+		public IActionResult GetReportingStructure(String id)
 		{
 			_logger.LogDebug($"Received reporting structure get request for employee with id: '{id}'");
 
