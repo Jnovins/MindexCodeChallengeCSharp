@@ -59,5 +59,32 @@ namespace CodeChallenge.Services
 
             return newEmployee;
         }
+
+        public ReportingStructure GetReportingStructure(String id)
+        {
+            Employee employee = _employeeRepository.GetById(id);
+
+            if(employee != null)
+            {
+                ReportingStructure reportingStructure = new ReportingStructure();
+                reportingStructure.Employee = employee;
+                reportingStructure.NumberOfReports = CompileNumberOfReports(id);
+                return reportingStructure;
+            }
+            return null;
+        }
+
+        private int CompileNumberOfReports(String id)
+        {
+            Employee employee = _employeeRepository.GetById(id);
+            List<Employee> directReports = employee.DirectReports;
+
+            if (directReports == null) return 0;
+
+            int numberOfReports = directReports.Count;
+            directReports.ForEach(r => { numberOfReports += CompileNumberOfReports(r.EmployeeId); });
+
+            return numberOfReports;
+        }
     }
 }
